@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="150dp"
+    android:background="@drawable/recipe_card2"
+    android:orientation="horizontal">
+
+    <Button
+        android:id="@+id/recipe_name_txtView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="[RECIPE NAME]"
+        android:textSize="25dp"
+        android:fontFamily="@font/font2"
+        android:textStyle="bold"
+        android:layout_gravity="center_vertical"
+        android:paddingTop="30dp"
+        android:paddingBottom="30dp"
+        android:background="@null"
+        android:textColor="#FFBB6A" />
+
+</LinearLayout>

@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/ingredient_item_border"
+    android:layout_height="50dp"
+    android:background="@drawable/ingredients_text_box"
     android:paddingLeft="10dp"
     android:paddingRight="10dp"
     android:paddingBottom="10dp"
@@ -15,6 +15,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:layout_gravity="center_vertical"
         android:gravity="center"
         android:text="INGREDIENT NAME"
         android:textSize="24dp"
@@ -29,13 +30,16 @@
         android:textSize="24dp"
         android:textColor="#000000" />-->
 
-    <TextView
+    <ImageButton
         android:id="@+id/btn_delete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="60dp"
+        android:layout_height="50dp"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center_vertical"
         android:onClick="deleteIngredient"
-        android:text="X"
-        android:textSize="24dp"
-        android:textColor="#666666" />
+        android:background="@null"
+        android:scaleType="centerInside"
+        android:src="@drawable/close" />
 
 </LinearLayout>

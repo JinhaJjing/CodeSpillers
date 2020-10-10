@@ -5,53 +5,107 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@drawable/background"
     tools:context=".MainActivity">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="What's in your fridge?"
-        android:textSize="30sp"
+        android:text="WHAT'S\nIN YOUR FRIDGE?"
+        android:textColor="#482C01"
+        android:textStyle="bold"
+        android:textSize="25sp"
+        android:fontFamily="@font/font3"
         android:layout_gravity="center"
-        android:paddingTop="10dp"
+        android:gravity="center"
+        android:paddingTop="40dp"
         android:paddingBottom="10dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/font2"
             android:text="I have..."
-            android:textSize="20sp"
+            android:textSize="25sp"
             android:paddingLeft="10dp"
             android:paddingTop="10dp"
+            android:layout_marginRight="10dp"
             android:paddingBottom="10dp"/>
 
         <EditText
-            android:id="@+id/editTxt_ingredient"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="ingrdient"/>
 
-        <Button
-            android:id="@+id/btn_add"
-            android:layout_width="wrap_content"
+            android:id="@+id/editTxt_ingredient"
+            android:layout_width="200sp"
+            android:textSize="25sp"
+            android:fontFamily="@font/font2"
             android:layout_height="wrap_content"
-            android:text="add"/>
+            android:layout_gravity="center"
+            android:inputType="text"
+            android:gravity="center"
+            android:background="@drawable/round_button"
+            android:textColor="#A5A5A5"
+            android:hint="ingredient"
+            android:imeOptions="actionDone"/>
 
     </LinearLayout>
 
-    <ListView
-        android:id="@+id/ingredient_list_view"
+
+    <ImageButton
+        android:id="@+id/btn_add"
+        android:layout_gravity="center"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
+        android:background="@null"
+        android:scaleType="centerInside"
+        android:src="@drawable/add_button"/>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:divider="#00000000"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:dividerHeight="10dp"></ListView>
+        android:orientation="vertical"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="20dp"
+        android:layout_weight="1"
+        android:background="@drawable/ingredients_box">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="My Ingredients"
+            android:fontFamily="@font/font3"
+            android:textColor="#482C01"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:paddingTop="20dp"
+            android:paddingLeft="20dp"
+            android:paddingBottom="10dp"/>
+
+        <ListView
+            android:id="@+id/ingredient_list_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:divider="#00000000"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:dividerHeight="10dp"></ListView>
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/btn_search"
+        android:layout_gravity="center"
+        android:layout_width="220dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="20dp"
+        android:background="@null"
+        android:scaleType="centerInside"
+        android:src="@drawable/search_button"/>
 
 </LinearLayout>
