@@ -32,6 +32,5 @@ dependencies {
     compile 'com.squareup.retrofit2:retrofit:2.4.0'
     compile 'com.google.code.gson:gson:2.8.2'                 // Gson 사용시
     compile 'com.squareup.retrofit2:converter-gson:2.3.0'     // Gson 처리시
-    compile 'com.rapidapi:rapidconnect-android:0.1'
     compile 'com.squareup.okhttp:okhttp:2.5.0'
 }

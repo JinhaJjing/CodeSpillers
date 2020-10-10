@@ -18,8 +18,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.TextView.OnEditorActionListener;
 
-import com.rapidapi.rapidconnect.RapidApiConnect;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +28,6 @@ import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity implements OnEditorActionListener{
 
-    private RapidApiConnect connect = new RapidApiConnect("Recipely", "a0c4ac63f9msh84bc34f67cf6995p170ce3jsn8500097f0637");
     private EditText ingredientEditTxt;
     private ListView listview;
     private IngredientListViewAdapter adapter = new IngredientListViewAdapter();
@@ -79,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements OnEditorActionLis
                 Request request = new Request.Builder()
                         .url("https://webknox-recipes.p.rapidapi.com/recipes/findByIngredients?number=5&ingredients=apples%252Cflour%252Csugar") //just try
                         .get()
-                        .addHeader("x-rapidapi-host", "webknox-recipes.p.rapidapi.com")
+                        .addHeader("x-rapidapi-host", "ebknox-recipes.p.rapidapi.comw")
                         .addHeader("x-rapidapi-key", "98312f1b1fmsh5495b56424f9e31p1e17bcjsn3569e163cd92") //my application key
                         .build();
 
