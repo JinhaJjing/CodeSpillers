@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -16,8 +18,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.TextView.OnEditorActionListener;
 
+import com.rapidapi.rapidconnect.RapidApiConnect;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+
 public class MainActivity extends AppCompatActivity implements OnEditorActionListener{
 
+    private RapidApiConnect connect = new RapidApiConnect("Recipely", "a0c4ac63f9msh84bc34f67cf6995p170ce3jsn8500097f0637");
     private EditText ingredientEditTxt;
     private ListView listview;
     private IngredientListViewAdapter adapter = new IngredientListViewAdapter();
@@ -52,7 +65,44 @@ public class MainActivity extends AppCompatActivity implements OnEditorActionLis
         searchbtn.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                List<String> ingredientList=new ArrayList<>();
+
+                for(int i=0;i<adapter.getCount();i++){
+                    String ingredientName = (String) adapter.getItem(i);
+                    ingredientList.add(ingredientName);
+                }
+
+                //TODO : API request - ingredientList
+                OkHttpClient client = new OkHttpClient();
+
+                Request request = new Request.Builder()
+                        .url("https://webknox-recipes.p.rapidapi.com/recipes/findByIngredients?number=5&ingredients=apples%252Cflour%252Csugar") //just try
+                        .get()
+                        .addHeader("x-rapidapi-host", "webknox-recipes.p.rapidapi.com")
+                        .addHeader("x-rapidapi-key", "98312f1b1fmsh5495b56424f9e31p1e17bcjsn3569e163cd92") //my application key
+                        .build();
+
+                List<Item> recipeList=new ArrayList<>();
+                try {
+                    Response response = client.newCall(request).execute();
+                    if (response.isSuccessful()) {
+                        List<Item> body = (List<Item>) response.body();
+                        for (int i = 0; i < body.size(); i++) {
+                            Item item=new Item();
+                            item.setTitle(body.get(i).getTitle());
+                            item.setImage(body.get(i).getImage());
+                            recipeList.add(item);
+                        }
+
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                Log.d("LIST",recipeList.toString());
                 Intent intent = new Intent(MainActivity.this, RecipeActivity.class);
+                intent.putExtra("recipeList", (Parcelable) recipeList);
                 startActivity(intent);
             }
         }) ;
@@ -76,7 +126,7 @@ public class MainActivity extends AppCompatActivity implements OnEditorActionLis
             if(ingredientName.equals("")) Toast.makeText(getApplicationContext(), "Enter something.", Toast.LENGTH_SHORT).show();
             else {
                 ingredientEditTxt.setText("");
-                adapter.addItem(ingredientName); //ingredientQuantity
+                adapter.addItem(ingredientName);
                 adapter.notifyDataSetChanged();
             }
         }

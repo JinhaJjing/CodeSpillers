@@ -10,24 +10,24 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="20dp"
         android:gravity="right">
+
         <ImageButton
+            android:paddingTop="20dp"
             android:id="@+id/back_btn"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:paddingRight="10dp"
-            android:background="@null"
             android:scaleType="centerInside"
+            android:background="@null"
             android:src="@drawable/arrow_back" />
         <ImageButton
-            android:id="@+id/mypagebtn"
+            android:id="@+id/home_btn"
+            android:paddingTop="20dp"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
             android:paddingRight="10dp"
             android:background="@null"
             android:scaleType="centerInside"
@@ -36,14 +36,14 @@
     </RelativeLayout>
 
     <TextView
+        android:id="@+id/recipe_name_txtView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="[RECIPE NAME]"
         android:textSize="30sp"
         android:textColor="#482C01"
         android:layout_gravity="center"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"/>
+        android:layout_marginBottom="30dp"/>
 
     <ListView
         android:id="@+id/step_list_view"

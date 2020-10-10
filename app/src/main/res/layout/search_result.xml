@@ -12,9 +12,6 @@
         android:id="@+id/back_btn"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:layout_alignParentLeft="true"
-        android:layout_centerVertical="true"
-        android:paddingRight="10dp"
         android:scaleType="centerInside"
         android:background="@null"
         android:src="@drawable/arrow_back" />

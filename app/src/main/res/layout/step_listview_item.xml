@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="150dp"
+    android:background="@drawable/instruction_card"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/step_number_txtView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:gravity="left"
+        android:text="[STEP NUM]"
+        android:textSize="20dp"
+        android:fontFamily="@font/font2"
+        android:textStyle="bold"
+        android:layout_gravity="center_vertical"
+        android:background="@null"
+        android:textColor="#FFFFFF" />
+    <TextView
+        android:id="@+id/step_desc_txtView"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="6"
+        android:gravity="left"
+        android:text="[STEP DESC]"
+        android:textSize="15dp"
+        android:fontFamily="@font/font2"
+        android:textStyle="bold"
+        android:layout_gravity="center_vertical"
+        android:background="@null"
+        android:textColor="#FFFFFF" />
+
+</LinearLayout>
