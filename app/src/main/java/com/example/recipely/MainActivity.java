@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements OnEditorActionLis
                     ingredientList.add(ingredientName);
                 }
                 final List<Item> recipeList=new ArrayList<>();
-                String json = bowlingJson(ingredientList);
+               /* String json = bowlingJson(ingredientList);
 
                 Log.d("INGREDIENT LIST",json);
 
@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity implements OnEditorActionLis
                             // Request not successful
                         }
                     }
-                });
+                });*/
 
                 Log.d("RECIPE LIST",recipeList.toString());
                 RecipeResult recipeResult=new RecipeResult();
@@ -146,10 +146,10 @@ public class MainActivity extends AppCompatActivity implements OnEditorActionLis
     String bowlingJson(List<String> recipeList) {
         String incredientStr="";
         for(String s:recipeList){
-            incredientStr+="'"+s+"',";
+            incredientStr+="\\\""+s+"\\\",";
         }
         incredientStr=incredientStr.substring(0,incredientStr.length()-1);
-        return "{'ingredients':["
+        return "{\\\"ingredients\\\":["
                 + incredientStr
                 + "]}";
     }
