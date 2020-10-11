@@ -18,22 +18,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.TextView.OnEditorActionListener;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import okhttp3.Call;
-import okhttp3.Callback;
 import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity implements OnEditorActionListener{
 
     private MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-    private OkHttpClient client = new OkHttpClient();
     private EditText ingredientEditTxt;
     private ListView listview;
     private IngredientListViewAdapter adapter = new IngredientListViewAdapter();
@@ -119,63 +111,22 @@ public class MainActivity extends AppCompatActivity implements OnEditorActionLis
                     }
                 });*/
 
-                String ingredients = "{'ingredients':["
-                        + "'potatoes',"
-                        + "'apples',"
-                        + "'honey'"
-                        + "]}";
+               //ApiCall apiCall=new ApiCall(ingredientList);
+               //String s=apiCall.call();
+               //Log.d("test",s);
 
-                try {
-                    String response = post("https://agile-sands-61557.herokuapp.com/application/recipes/", ingredients);
-                    Log.d("RESPONSE",response.toString());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-
-                /*Log.d("RECIPE LIST",recipeList.toString());
+                Log.d("RECIPE LIST",recipeList.toString());
                 RecipeResult recipeResult=new RecipeResult();
                 recipeResult.setRecipeList(recipeList);
+
                 Intent intent = new Intent(MainActivity.this, RecipeActivity.class);
                 intent.putExtra("recipeResultInfo", recipeResult);
-                startActivity(intent);*/
+                startActivity(intent);
             }
         }) ;
 
         InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(ingredientEditTxt.getWindowToken(), 0);
-    }
-
-    String post(String url, String ingredients) throws IOException {
-        RequestBody body = RequestBody.create(JSON, ingredients);
-        Request request = new Request.Builder()
-                .url(url)
-                .post(body)
-                .build();
-        Response response = client.newCall(request).execute();
-        return response.body().string();
-    }
-/*
-    Call post(String url, String json, Callback callback) {
-        RequestBody body = RequestBody.create(JSON, json);
-        Request request = new Request.Builder()
-                .url(url)
-                .post(body)
-                .build();
-        Call call = client.newCall(request);
-        call.enqueue(callback);
-        return call;
-    }*/
-
-    String bowlingJson(List<String> recipeList) {
-        String incredientStr="";
-        for(String s:recipeList){
-            incredientStr+="\\\""+s+"\\\",";
-        }
-        incredientStr=incredientStr.substring(0,incredientStr.length()-1);
-        return "{\\\"ingredients\\\":["
-                + incredientStr
-                + "]}";
     }
 
     public void deleteIngredient(View v) {

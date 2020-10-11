@@ -22,23 +22,24 @@ public class StepActivity extends AppCompatActivity {
         setContentView(R.layout.instruction);
 
         intent = getIntent();
-        Item item = (Item) intent.getSerializableExtra("recipeInfo");
+        String item = (String) intent.getSerializableExtra("recipeInfo");
 
         TextView recipeNameTxtView = (TextView) findViewById(R.id.recipe_name_txtView);
-        recipeNameTxtView.setText(item.getTitle());
+        recipeNameTxtView.setText(item);
 
         listview = (ListView) findViewById(R.id.step_list_view);
         listview.setAdapter(adapter);
 
-        for(String s:item.getSteps()){
-            adapter.addItem(s);
-        }
-/*
+        //for(String s:item.getSteps()){
+         //   adapter.addItem(s);
+        //}
+
         //스텝받아와서 리스트에 뿌려주기
-        adapter.addItem("1. Place chopped tomatoes, sliced cucumber, sliced red onion, diced avocado, and chopped cilantro into a large salad bowl");
-        adapter.addItem("2. Place chopped tomatoes, sliced cucumber, sliced red onion, diced avocado, and chopped cilantro into a large salad bowl");
-        adapter.addItem("3. Place chopped tomatoes, sliced cucumber, sliced red onion, diced avocado, and chopped cilantro into a large salad bowl");
-*/
+        adapter.addItem("1. Place caramels in a 3-quart slow cooker; stir in condensed milk.");
+        adapter.addItem("2. Cover and cook on LOW 3 1/2 hours, stirring occasionally, until caramels melt and mixture is smooth.");
+        adapter.addItem("3. Serve with apple slices and pound cake squares.");
+        adapter.addItem("4. Party Plan: Keep this fondue warm in the slow cooker for easy dipping. Reheat any leftovers in the microwave, stirring at 1-minute intervals until heated through.");
+
         adapter.notifyDataSetChanged();
 
         //뒤로가기버튼
@@ -55,7 +56,9 @@ public class StepActivity extends AppCompatActivity {
         homebtn.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent = new Intent(StepActivity.this, MainActivity.class);
                 StepActivity.this.finish();
+                startActivity(intent);
             }
         });
 

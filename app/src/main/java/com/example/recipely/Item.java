@@ -9,6 +9,10 @@ public class Item  implements Serializable {
     private List<String> ingredients;
     private List<String> steps;
 
+    public Item(String title) {
+        this.title = title;
+    }
+
     public List<String> getSteps() {
         return steps;
     }

@@ -31,20 +31,20 @@ public class RecipeActivity extends AppCompatActivity {
         intent = getIntent();
         RecipeResult recipeResult = (RecipeResult) intent.getSerializableExtra("recipeResultInfo");
         List<Item> recipeList=recipeResult.getRecipeList();
-        for(Item i:recipeList){
-            adapter.addItem(i);
-        }
+        //for(Item i:recipeList){
+        //    adapter.addItem(i);
+        //}
 
-        if(recipeList.size()==0){
-            TextView nothingTxtView = (TextView)findViewById(R.id.nothing_txt_view);
-            nothingTxtView.setText("No Result Found");
-        }
+        //if(recipeList.size()==0){
+        //    TextView nothingTxtView = (TextView)findViewById(R.id.nothing_txt_view);
+        //    nothingTxtView.setText("No Result Found");
+        //}
 
         //가능한 레시피 가져와서 뿌려주기
-        /*adapter.addItem("TOMATO SOUP");
-        adapter.addItem("POTATO SOUP");
+        adapter.addItem("TOMATO SOUP");
         adapter.addItem("BEEF SALAD");
-*/
+        adapter.addItem("CARAMEL FONDUE");
+
         adapter.notifyDataSetChanged();
 
         Log.d("NAME",listview.toString());
@@ -53,9 +53,8 @@ public class RecipeActivity extends AppCompatActivity {
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView parent, View v, int position, long id) {
-                Item item=(Item)parent.getItemAtPosition(position);
+                String item=(String)parent.getItemAtPosition(position);
 
-                Log.d("NAME",item.toString());
                 Intent intent = new Intent(RecipeActivity.this, StepActivity.class);
                 intent.putExtra("recipeInfo", item);
                 startActivity(intent);
