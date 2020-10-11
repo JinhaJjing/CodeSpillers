@@ -72,20 +72,14 @@ public class MainActivity extends AppCompatActivity implements OnEditorActionLis
                     ingredientList.add(ingredientName);
                 }
 
+                List<Item> recipeList=new ArrayList<>();
+
                 OkHttpClient client = new OkHttpClient();
 
-                MediaType JSON = MediaType.get("application/json; charset=utf-8"); //error now
-
-                // todo: perhaps use this library for parsing the JSON response, it's your call
-                //     https://square.github.io/okhttp/recipes/#parse-a-json-response-with-moshi-kt-java
-                // I can also do this part if you tell me where/how do you want me to save the data
-
-                // todo: look into secret management
-                //     https://medium.com/@ericfu/securely-storing-secrets-in-an-android-application-501f030ae5a3
-                // you can also leave this to me
+                MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
                 String json = bowlingJson(ingredientList);
-                RequestBody body = RequestBody.create(json, JSON);
+                RequestBody body = RequestBody.create(JSON, json); // new
 
                 Request request = new Request.Builder()
                         .url("http://127.0.0.1:3000/recipes/")
@@ -93,14 +87,23 @@ public class MainActivity extends AppCompatActivity implements OnEditorActionLis
                         .build();
                 try {
                     Response response = client.newCall(request).execute();
-                    response.body().string();
+                    List<Item> itemList = (List<Item>) response.body();
+
+                    if (itemList != null) {
+                        for (int i = 0; i < itemList.size(); i++) {
+                            Item item=new Item();
+                            item.setImage(itemList.get(i).getImage());
+                            item.setTitle(itemList.get(i).getTitle());
+                            recipeList.add(item);
+                        }
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
 
-                Log.d("LIST",ingredientList.toString());
+                Log.d("LIST",recipeList.toString());
                 Intent intent = new Intent(MainActivity.this, RecipeActivity.class);
-                intent.putExtra("recipeList", (Parcelable) ingredientList);
+                intent.putExtra("recipeList", (Parcelable) recipeList);
                 startActivity(intent);
             }
         }) ;
