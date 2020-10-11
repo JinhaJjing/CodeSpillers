@@ -10,7 +10,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 public class RecipeListViewAdapter extends BaseAdapter {
-    private ArrayList<String> listViewItemList = new ArrayList<String>();
+    private ArrayList<Item> listViewItemList = new ArrayList<>();
 
     // ListViewAdapter의 생성자
     public RecipeListViewAdapter() {
@@ -37,7 +37,7 @@ public class RecipeListViewAdapter extends BaseAdapter {
         TextView recipeTxtView = (TextView) convertView.findViewById(R.id.recipe_name_txtView);
 
         // Data Set(listViewItemList)에서 position에 위치한 데이터 참조 획득
-        String recipeName = listViewItemList.get(position);
+        String recipeName = listViewItemList.get(position).getTitle();
 
         // 아이템 내 각 위젯에 데이터 반영
         recipeTxtView.setText(recipeName);
@@ -58,8 +58,8 @@ public class RecipeListViewAdapter extends BaseAdapter {
     }
 
     // 아이템 데이터 추가를 위한 함수. 개발자가 원하는대로 작성 가능.
-    public void addItem(String recipeName) {
-        listViewItemList.add(recipeName);
+    public void addItem(Item item) {
+        listViewItemList.add(item);
     }
 
 }

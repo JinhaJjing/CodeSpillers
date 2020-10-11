@@ -8,11 +8,15 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.List;
+
 public class RecipeActivity extends AppCompatActivity {
 
+    private Intent intent;
     private ListView listview;
     private RecipeListViewAdapter adapter = new RecipeListViewAdapter();
 
@@ -24,11 +28,23 @@ public class RecipeActivity extends AppCompatActivity {
         listview = (ListView) findViewById(R.id.recipe_list_view);
         listview.setAdapter(adapter);
 
+        intent = getIntent();
+        RecipeResult recipeResult = (RecipeResult) intent.getSerializableExtra("recipeResultInfo");
+        List<Item> recipeList=recipeResult.getRecipeList();
+        for(Item i:recipeList){
+            adapter.addItem(i);
+        }
+
+        if(recipeList.size()==0){
+            TextView nothingTxtView = (TextView)findViewById(R.id.nothing_txt_view);
+            nothingTxtView.setText("No Result Found");
+        }
+
         //가능한 레시피 가져와서 뿌려주기
-        adapter.addItem("TOMATO SOUP");
+        /*adapter.addItem("TOMATO SOUP");
         adapter.addItem("POTATO SOUP");
         adapter.addItem("BEEF SALAD");
-
+*/
         adapter.notifyDataSetChanged();
 
         Log.d("NAME",listview.toString());
@@ -37,22 +53,11 @@ public class RecipeActivity extends AppCompatActivity {
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView parent, View v, int position, long id) {
-                // get item
-                /*BistroListViewItem item = (BistroListViewItem) parent.getItemAtPosition(position);
-                Store store = new Store();
-                store.setOwnerId(storeList.get(position).getOwnerId());
-                store.setId(storeList.get(position).getId());
-                store.setName(storeList.get(position).getName());
-                store.setLocation(storeList.get(position).getLocation());
-                store.setDescription(storeList.get(position).getDescription());
-                store.setPhone(storeList.get(position).getPhone());
-                //store.setPhotoUri(storeList.get(position).getPhotoUri());*/
-                Log.d("NAME","efefe");
-                String recipeName=(String)parent.getItemAtPosition(position);
+                Item item=(Item)parent.getItemAtPosition(position);
 
-                Log.d("NAME",recipeName);
+                Log.d("NAME",item.toString());
                 Intent intent = new Intent(RecipeActivity.this, StepActivity.class);
-                intent.putExtra("recipeInfo", recipeName);
+                intent.putExtra("recipeInfo", item);
                 startActivity(intent);
             }
         });

@@ -22,6 +22,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.Call;
+import okhttp3.Callback;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -30,6 +32,8 @@ import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity implements OnEditorActionListener{
 
+    private MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+    private OkHttpClient client = new OkHttpClient();
     private EditText ingredientEditTxt;
     private ListView listview;
     private IngredientListViewAdapter adapter = new IngredientListViewAdapter();
@@ -71,39 +75,55 @@ public class MainActivity extends AppCompatActivity implements OnEditorActionLis
                     String ingredientName = (String) adapter.getItem(i);
                     ingredientList.add(ingredientName);
                 }
-
-                List<Item> recipeList=new ArrayList<>();
-
-                OkHttpClient client = new OkHttpClient();
-
-                MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-
+                final List<Item> recipeList=new ArrayList<>();
                 String json = bowlingJson(ingredientList);
-                RequestBody body = RequestBody.create(JSON, json); // new
 
-                Request request = new Request.Builder()
-                        .url("http://127.0.0.1:3000/recipes/")
-                        .post(body)
-                        .build();
-                try {
-                    Response response = client.newCall(request).execute();
-                    List<Item> itemList = (List<Item>) response.body();
+                Log.d("INGREDIENT LIST",json);
 
-                    if (itemList != null) {
-                        for (int i = 0; i < itemList.size(); i++) {
-                            Item item=new Item();
-                            item.setImage(itemList.get(i).getImage());
-                            item.setTitle(itemList.get(i).getTitle());
-                            recipeList.add(item);
+                post("https://agile-sands-61557.herokuapp.com/application/recipes/", json, new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        // Something went wrong
+                        Log.d("FAIL LIST","fail");
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        if (response.isSuccessful()) {
+                            List<Item> itemList = (List<Item>) response.body();
+
+                            if (itemList != null) {
+                                for (int i = 0; i < itemList.size(); i++) {
+                                    Item item=new Item();
+                                    //item.setImage_url(itemList.get(i).getImage_url());
+                                    //item.setTitle(itemList.get(i).getTitle());
+                                    //item.setSteps(itemList.get(i).getSteps());
+
+                                    item.setTitle("POTATO SOUP");
+                                    List<String> steps=new ArrayList<>();
+                                    steps.add("1. aweialdifv");
+                                    steps.add("2. alwregjvakjfvv");
+                                    steps.add("3. swevearbaer");
+                                    item.setSteps(steps);
+
+                                    Log.d("ITEM  LIST",item.toString());
+                                    recipeList.add(item);
+                                }
+                            }
+
+                        } else {
+                            int statusCode=response.code();
+                            Log.d("FAIL RESPONSE",Integer.toString(statusCode));
+                            // Request not successful
                         }
                     }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                });
 
-                Log.d("LIST",recipeList.toString());
+                Log.d("RECIPE LIST",recipeList.toString());
+                RecipeResult recipeResult=new RecipeResult();
+                recipeResult.setRecipeList(recipeList);
                 Intent intent = new Intent(MainActivity.this, RecipeActivity.class);
-                intent.putExtra("recipeList", (Parcelable) recipeList);
+                intent.putExtra("recipeResultInfo", recipeResult);
                 startActivity(intent);
             }
         }) ;
@@ -112,12 +132,23 @@ public class MainActivity extends AppCompatActivity implements OnEditorActionLis
         imm.hideSoftInputFromWindow(ingredientEditTxt.getWindowToken(), 0);
     }
 
+    Call post(String url, String json, Callback callback) {
+        RequestBody body = RequestBody.create(JSON, json);
+        Request request = new Request.Builder()
+                .url(url)
+                .post(body)
+                .build();
+        Call call = client.newCall(request);
+        call.enqueue(callback);
+        return call;
+    }
+
     String bowlingJson(List<String> recipeList) {
         String incredientStr="";
         for(String s:recipeList){
             incredientStr+="'"+s+"',";
         }
-        incredientStr=incredientStr.substring(0,incredientStr.length()-2);
+        incredientStr=incredientStr.substring(0,incredientStr.length()-1);
         return "{'ingredients':["
                 + incredientStr
                 + "]}";

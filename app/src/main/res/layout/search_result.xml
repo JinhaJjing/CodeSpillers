@@ -36,4 +36,15 @@
         android:layout_marginLeft="30dp"
         android:dividerHeight="40dp"></ListView>
 
+    <TextView
+        android:id="@+id/nothing_txt_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#482C01"
+        android:textStyle="bold"
+        android:textSize="25sp"
+        android:fontFamily="@font/font3"
+        android:layout_gravity="center"
+        android:paddingBottom="30dp"/>
+
 </LinearLayout>
