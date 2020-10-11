@@ -22,8 +22,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity implements OnEditorActionListener{
@@ -70,42 +72,52 @@ public class MainActivity extends AppCompatActivity implements OnEditorActionLis
                     ingredientList.add(ingredientName);
                 }
 
-                //TODO : API request - ingredientList
                 OkHttpClient client = new OkHttpClient();
 
-                Request request = new Request.Builder()
-                        .url("https://webknox-recipes.p.rapidapi.com/recipes/findByIngredients?number=5&ingredients=apples%252Cflour%252Csugar") //just try
-                        .get()
-                        .addHeader("x-rapidapi-host", "ebknox-recipes.p.rapidapi.comw")
-                        .addHeader("x-rapidapi-key", "98312f1b1fmsh5495b56424f9e31p1e17bcjsn3569e163cd92") //my application key
-                        .build();
+                MediaType JSON = MediaType.get("application/json; charset=utf-8"); //error now
 
-                List<Item> recipeList=new ArrayList<>();
+                // todo: perhaps use this library for parsing the JSON response, it's your call
+                //     https://square.github.io/okhttp/recipes/#parse-a-json-response-with-moshi-kt-java
+                // I can also do this part if you tell me where/how do you want me to save the data
+
+                // todo: look into secret management
+                //     https://medium.com/@ericfu/securely-storing-secrets-in-an-android-application-501f030ae5a3
+                // you can also leave this to me
+
+                String json = bowlingJson(ingredientList);
+                RequestBody body = RequestBody.create(json, JSON);
+
+                Request request = new Request.Builder()
+                        .url("http://127.0.0.1:3000/recipes/")
+                        .post(body)
+                        .build();
                 try {
                     Response response = client.newCall(request).execute();
-                    if (response.isSuccessful()) {
-                        List<Item> body = (List<Item>) response.body();
-                        for (int i = 0; i < body.size(); i++) {
-                            Item item=new Item();
-                            item.setTitle(body.get(i).getTitle());
-                            item.setImage(body.get(i).getImage());
-                            recipeList.add(item);
-                        }
-
-                    }
+                    response.body().string();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
 
-                Log.d("LIST",recipeList.toString());
+                Log.d("LIST",ingredientList.toString());
                 Intent intent = new Intent(MainActivity.this, RecipeActivity.class);
-                intent.putExtra("recipeList", (Parcelable) recipeList);
+                intent.putExtra("recipeList", (Parcelable) ingredientList);
                 startActivity(intent);
             }
         }) ;
 
         InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(ingredientEditTxt.getWindowToken(), 0);
+    }
+
+    String bowlingJson(List<String> recipeList) {
+        String incredientStr="";
+        for(String s:recipeList){
+            incredientStr+="'"+s+"',";
+        }
+        incredientStr=incredientStr.substring(0,incredientStr.length()-2);
+        return "{'ingredients':["
+                + incredientStr
+                + "]}";
     }
 
     public void deleteIngredient(View v) {
